@@ -5,8 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ninja Gold</title>
+    <style type="text/css">
+    
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .container{
+        }
+
+        form{
+            display: inline-block;
+            background-color: lightblue;
+            text-align: center;
+            height: 150px;
+            width: 150px;
+        }
+
+        .scroll_header{
+            display: block;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .activities{
+            background-color: black;
+            height: 150px;
+            width: 600px;
+            overflow: scroll;
+        }
+    
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+
+        <div class="gold">
+            Your Gold: {{session['gold']}}
+        </div>
+
+        <div class="location">
+
+            <form action="/process_money" method="post">
+                <h3>Farm</h3>
+                <input type="hidden" name="loc" value="farm"/>
+                <input type="submit" value="Find Gold!"/>
+            </form>
+            
+            <form action="/process_money" method="post">
+                <h3>Cave</h3>
+                <input type="hidden" name="loc" value="cave"/>
+                <input type="submit" value="Find Gold!"/>
+            </form>
+            
+            <form action="/process_money" method="post">
+                <h3>House</h3>
+                <input type="hidden" name="loc" value="house"/>
+                <input type="submit" value="Find Gold!"/>
+            </form>
+            
+            <form action="/process_money" method="post">
+                <h3>Casino</h3>
+                <input type="hidden" name="loc" value="casino"/>
+                <input type="submit" value="Find Gold!"/>
+            </form>
+        </div>
+
+            <h5 class="scroll_header">Recent Activities:</h5>
+            <div class="activities">
+                {% for i in range (activities|length): %}
+                    <p class="{{session['color'][i]}}">{{activities[i]}}</p>
+                {% endfor %}
+            </div>
+            
+    </div>
+
 </body>
 </html>
