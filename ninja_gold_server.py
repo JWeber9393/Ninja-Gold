@@ -13,6 +13,7 @@ def ninja_gold():
         session['activities'] = []
     if 'color' not in session:
         session['color'] = []
+    
     return render_template('ninja_gold.html', activities = session['activities'])
 
 @app.route("/process_money", methods=["POST"])
@@ -21,13 +22,12 @@ def process_money():
 
     if session['location'] == "farm":
         gold = random.randint(10, 20)
-    if session['location'] == "cave":
+    elif session['location'] == "cave":
         gold = random.randint(5, 10)
-    if session['location'] == "house":
+    elif session['location'] == "house":
         gold = random.randint(2, 5)
-    if session['location'] == "casino":
+    elif session['location'] == "casino":
         gold = random.randint(-50, 50)
-    
     session['gold'] += gold
 
     if gold > 0:
@@ -36,9 +36,16 @@ def process_money():
         
     else:
         session['activities'].insert(0, 'You lost '+ str(abs(gold))+' gold at the '+session['location']+'. That sucks...')
-        session['color'].insert(0,'red') 
+        session['color'].insert(0,'red')
 
     return redirect('/')
+
+@app.route('/reset', methods=["POST"])
+def reset():
+    print("*"*100)
+    print("reset initiated")
+    session.clear()
+    return redirect("/")
 
 if __name__==('__main__'):
     app.run(debug=True)
